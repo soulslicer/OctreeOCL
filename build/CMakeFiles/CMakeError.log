@@ -1,0 +1,33 @@
+Determining if the CL_VERSION_2_0 exist failed with the following output:
+Change Dir: /home/raaj/octree_module/OctreeOCL/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec2167234821/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec2167234821.dir/build.make CMakeFiles/cmTryCompileExec2167234821.dir/build
+make[1]: Entering directory `/home/raaj/octree_module/OctreeOCL/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/raaj/octree_module/OctreeOCL/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec2167234821.dir/CheckSymbolExists.c.o
+/usr/bin/cc   -fopenmp     -o CMakeFiles/cmTryCompileExec2167234821.dir/CheckSymbolExists.c.o   -c /home/raaj/octree_module/OctreeOCL/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/home/raaj/octree_module/OctreeOCL/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c: In function ‘main’:
+/home/raaj/octree_module/OctreeOCL/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: error: ‘CL_VERSION_2_0’ undeclared (first use in this function)
+   return ((int*)(&CL_VERSION_2_0))[argc];
+                   ^
+/home/raaj/octree_module/OctreeOCL/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: note: each undeclared identifier is reported only once for each function it appears in
+make[1]: Leaving directory `/home/raaj/octree_module/OctreeOCL/build/CMakeFiles/CMakeTmp'
+make[1]: *** [CMakeFiles/cmTryCompileExec2167234821.dir/CheckSymbolExists.c.o] Error 1
+make: *** [cmTryCompileExec2167234821/fast] Error 2
+
+File /home/raaj/octree_module/OctreeOCL/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include </usr/include/CL/cl.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef CL_VERSION_2_0
+  return ((int*)(&CL_VERSION_2_0))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+

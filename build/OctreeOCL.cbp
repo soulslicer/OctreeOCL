@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+   <FileVersion major="1" minor="6" />
+   <Project>
+      <Option title="OctreeOCL" />
+      <Option makefile_is_custom="1" />
+      <Option compiler="gcc" />
+      <Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\usr\;CMake Files\..\..\..\..\usr\local\;CMake Files\..\..\..\..\usr\local\share\;CMake Files\..\..\..\..\usr\local\share\pcl-1.8\;CMake Files\..\..\..\..\usr\lib\;CMake Files\..\..\..\..\usr\lib\vtk-5.8\;CMake Files\..\..\..\..\usr\lib\vtk-5.8\CMake\;CMake Files\cmake\;CMake Files\cmake\modules\;" />
+      <Build>
+      <Target title="all">
+         <Option working_dir="/home/raaj/octree_module/OctreeOCL/build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/raaj/octree_module/OctreeOCL/build/Makefile&quot;  VERBOSE=1 all" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/raaj/octree_module/OctreeOCL/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/raaj/octree_module/OctreeOCL/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/raaj/octree_module/OctreeOCL/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="edit_cache">
+         <Option working_dir="/home/raaj/octree_module/OctreeOCL/build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/raaj/octree_module/OctreeOCL/build/Makefile&quot;  VERBOSE=1 edit_cache" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/raaj/octree_module/OctreeOCL/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/raaj/octree_module/OctreeOCL/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/raaj/octree_module/OctreeOCL/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="rebuild_cache">
+         <Option working_dir="/home/raaj/octree_module/OctreeOCL/build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/raaj/octree_module/OctreeOCL/build/Makefile&quot;  VERBOSE=1 rebuild_cache" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/raaj/octree_module/OctreeOCL/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/raaj/octree_module/OctreeOCL/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/raaj/octree_module/OctreeOCL/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="example">
+         <Option output="/home/raaj/octree_module/OctreeOCL/build/example" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/home/raaj/octree_module/OctreeOCL/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add option="-DDISABLE_OPENNI2" />
+            <Add option="-DDISABLE_ENSENSO" />
+            <Add option="-DDISABLE_DAVIDSDK" />
+            <Add option="-DDISABLE_DSSDK" />
+            <Add option="-DDISABLE_PCAP" />
+            <Add option="-DDISABLE_PNG" />
+            <Add option="-DDISABLE_LIBUSB_1_0" />
+            <Add option="-DDISABLE_RSSDK" />
+            <Add option="-DEIGEN_USE_NEW_STDVECTOR" />
+            <Add option="-DEIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET" />
+            <Add option="-DFLANN_STATIC" />
+            <Add option="-Dqh_QHpointer" />
+            <Add directory="/home/raaj/octree_module/OctreeOCL/src" />
+            <Add directory="/usr/include/eigen3" />
+            <Add directory="/usr/include/ni" />
+            <Add directory="/usr/include/vtk-5.8" />
+            <Add directory="/usr/local/include/pcl-1.8" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/raaj/octree_module/OctreeOCL/build/Makefile&quot;  VERBOSE=1 example" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/raaj/octree_module/OctreeOCL/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/raaj/octree_module/OctreeOCL/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/raaj/octree_module/OctreeOCL/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="example/fast">
+         <Option output="/home/raaj/octree_module/OctreeOCL/build/example" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/home/raaj/octree_module/OctreeOCL/build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add option="-DDISABLE_OPENNI2" />
+            <Add option="-DDISABLE_ENSENSO" />
+            <Add option="-DDISABLE_DAVIDSDK" />
+            <Add option="-DDISABLE_DSSDK" />
+            <Add option="-DDISABLE_PCAP" />
+            <Add option="-DDISABLE_PNG" />
+            <Add option="-DDISABLE_LIBUSB_1_0" />
+            <Add option="-DDISABLE_RSSDK" />
+            <Add option="-DEIGEN_USE_NEW_STDVECTOR" />
+            <Add option="-DEIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET" />
+            <Add option="-DFLANN_STATIC" />
+            <Add option="-Dqh_QHpointer" />
+            <Add directory="/home/raaj/octree_module/OctreeOCL/src" />
+            <Add directory="/usr/include/eigen3" />
+            <Add directory="/usr/include/ni" />
+            <Add directory="/usr/include/vtk-5.8" />
+            <Add directory="/usr/local/include/pcl-1.8" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/raaj/octree_module/OctreeOCL/build/Makefile&quot;  VERBOSE=1 example/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/raaj/octree_module/OctreeOCL/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/raaj/octree_module/OctreeOCL/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/raaj/octree_module/OctreeOCL/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="octree_ocl">
+         <Option output="/home/raaj/octree_module/OctreeOCL/build/liboctree_ocl.so" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/home/raaj/octree_module/OctreeOCL/build" />
+         <Option object_output="./" />
+         <Option type="3" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add option="-DDISABLE_OPENNI2" />
+            <Add option="-DDISABLE_ENSENSO" />
+            <Add option="-DDISABLE_DAVIDSDK" />
+            <Add option="-DDISABLE_DSSDK" />
+            <Add option="-DDISABLE_PCAP" />
+            <Add option="-DDISABLE_PNG" />
+            <Add option="-DDISABLE_LIBUSB_1_0" />
+            <Add option="-DDISABLE_RSSDK" />
+            <Add option="-DEIGEN_USE_NEW_STDVECTOR" />
+            <Add option="-DEIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET" />
+            <Add option="-DFLANN_STATIC" />
+            <Add option="-Dqh_QHpointer" />
+            <Add directory="/home/raaj/octree_module/OctreeOCL/src" />
+            <Add directory="/usr/include/eigen3" />
+            <Add directory="/usr/include/ni" />
+            <Add directory="/usr/include/vtk-5.8" />
+            <Add directory="/usr/local/include/pcl-1.8" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/raaj/octree_module/OctreeOCL/build/Makefile&quot;  VERBOSE=1 octree_ocl" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/raaj/octree_module/OctreeOCL/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/raaj/octree_module/OctreeOCL/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/raaj/octree_module/OctreeOCL/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="octree_ocl/fast">
+         <Option output="/home/raaj/octree_module/OctreeOCL/build/liboctree_ocl.so" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/home/raaj/octree_module/OctreeOCL/build" />
+         <Option object_output="./" />
+         <Option type="3" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add option="-DDISABLE_OPENNI2" />
+            <Add option="-DDISABLE_ENSENSO" />
+            <Add option="-DDISABLE_DAVIDSDK" />
+            <Add option="-DDISABLE_DSSDK" />
+            <Add option="-DDISABLE_PCAP" />
+            <Add option="-DDISABLE_PNG" />
+            <Add option="-DDISABLE_LIBUSB_1_0" />
+            <Add option="-DDISABLE_RSSDK" />
+            <Add option="-DEIGEN_USE_NEW_STDVECTOR" />
+            <Add option="-DEIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET" />
+            <Add option="-DFLANN_STATIC" />
+            <Add option="-Dqh_QHpointer" />
+            <Add directory="/home/raaj/octree_module/OctreeOCL/src" />
+            <Add directory="/usr/include/eigen3" />
+            <Add directory="/usr/include/ni" />
+            <Add directory="/usr/include/vtk-5.8" />
+            <Add directory="/usr/local/include/pcl-1.8" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/raaj/octree_module/OctreeOCL/build/Makefile&quot;  VERBOSE=1 octree_ocl/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/raaj/octree_module/OctreeOCL/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/raaj/octree_module/OctreeOCL/build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/raaj/octree_module/OctreeOCL/build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      </Build>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/src/example.cpp">
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/src/OCLManager.hpp">
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/src/Octree.hpp">
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/src/OctreeOCL.cl">
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/src/OctreeOCL.hpp">
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/local/share/pcl-1.8/PCLConfigVersion.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\share\pcl-1.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/local/share/pcl-1.8/PCLConfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\local\share\pcl-1.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/lib/vtk-5.8/VTKConfigVersion.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/lib/vtk-5.8/VTKConfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/lib/vtk-5.8/VTKConfig-Java.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/lib/vtk-5.8/VTKConfig-Python.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/lib/vtk-5.8/VTKConfig-Tcl.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/lib/vtk-5.8/VTKConfigQt.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/lib/vtk-5.8/VTKTargets.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/lib/vtk-5.8/VTKTargets-release.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/lib/vtk-5.8/UseVTK.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/lib/vtk-5.8/VTKConfigVersion.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/lib/vtk-5.8/VTKConfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/lib/vtk-5.8/VTKConfig-Java.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/lib/vtk-5.8/VTKConfig-Python.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/lib/vtk-5.8/VTKConfig-Tcl.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/lib/vtk-5.8/VTKConfigQt.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/lib/vtk-5.8/UseVTK.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/lib/vtk-5.8/VTKConfigVersion.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/lib/vtk-5.8/VTKConfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/lib/vtk-5.8/VTKConfig-Java.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/lib/vtk-5.8/VTKConfig-Python.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/lib/vtk-5.8/VTKConfig-Tcl.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/lib/vtk-5.8/VTKConfigQt.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/lib/vtk-5.8/UseVTK.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/lib/vtk-5.8/VTKConfigVersion.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/lib/vtk-5.8/VTKConfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/lib/vtk-5.8/VTKConfig-Java.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/lib/vtk-5.8/VTKConfig-Python.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/lib/vtk-5.8/VTKConfig-Tcl.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/lib/vtk-5.8/VTKConfigQt.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/lib/vtk-5.8/UseVTK.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\lib\vtk-5.8\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/../../../../usr/lib/vtk-5.8/CMake/vtkMakeInstantiator.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\usr\lib\vtk-5.8\CMake\" />
+      </Unit>
+      <Unit filename="/home/raaj/octree_module/OctreeOCL/cmake/modules/FindOpenCL.cmake">
+          <Option virtualFolder="CMake Files\cmake\modules\" />
+      </Unit>
+   </Project>
+</CodeBlocks_project_file>
