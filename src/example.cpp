@@ -158,7 +158,7 @@ int main(int argc, char** argv)
     std::random_shuffle(queries.begin(), queries.end());
     cout << queries.size() << endl;
 
-    bool test_type = true;
+    bool test_type = false;
 
     if(test_type){
 
@@ -198,27 +198,6 @@ int main(int argc, char** argv)
 
         if(!twoVectorVectorsEqual(nonRecursiveResults, defaultResults)) cout << "FUCK" << endl;
 
-//        for(int i=0; i<queries.size(); i++){
-
-//            std::vector<int> treeIndices;
-//            std::vector<float> treeDists;
-//            tree->radiusSearch(queries[i], 0.5, treeIndices, treeDists);
-
-//            std::vector<uint32_t> resultsDefault;
-//            octree.radiusNeighbors<unibn::L2Distance<PointT>>(queries[i], 0.5, resultsDefault);
-//            std::vector<int> resultsDefaultConv;
-//            for(uint32_t m : resultsDefault) resultsDefaultConv.push_back((int)m);
-
-//            std::vector<int> resultsNonRecursive = octree.radiusNeighboursExt(queries[i], 0.5);
-
-//            if(!twoVectorsEqual(resultsNonRecursive, resultsDefaultConv)) cout << "FUCK" << endl;
-
-//            if(!twoVectorsEqual(treeIndices, resultsDefaultConv)) cout << "FUCK" << endl;
-
-//        }
-
-
-
     }
     else
     {
@@ -255,53 +234,3 @@ int main(int argc, char** argv)
 
     return 0;
 }
-
-
-//// radiusNeighbors returns indexes to neighboring points.
-//std::vector<uint32_t> results;
-//const Point3f& q = points[0];
-//octree.radiusNeighbors<unibn::L2Distance<Point3f> >(q, 0.2f, results);
-//std::cout << results.size() << " radius neighbors (r = 0.2m) found for (" << q.x << ", " << q.y << "," << q.z << ")"
-//          << std::endl;
-//for (uint32_t i = 0; i < results.size(); ++i)
-//{
-//  const Point3f& p = points[results[i]];
-//  std::cout << "  " << results[i] << ": (" << p.x << ", " << p.y << ", " << p.z << ") => "
-//            << std::sqrt(unibn::L2Distance<Point3f>::compute(p, q)) << std::endl;
-//}
-
-//// performing queries for each point in point cloud
-//begin = clock();
-//cout << "SIZE: " << points.size() << endl;
-////#pragma omp parallel for shared(octree, points)
-//for (uint32_t i = 0; i < points.size(); ++i)
-//{
-//  //cout << i << endl;
-//  std::vector<uint32_t> result;
-//  //octree.findNeighbor<unibn::L2Distance<Point3f> >(points[i]);
-//  octree.radiusNeighbors<unibn::L2Distance<Point3f> >(points[i], 0.5f, result);
-//}
-//end = clock();
-//double search_time = ((double)(end - begin) / CLOCKS_PER_SEC);
-//std::cout << "Searching for all radius neighbors (r = 0.5m) took " << search_time << " seconds." << std::endl;
-
-//octree.clear();
-
-///* PCL TEST */
-//pcl::search::KdTree<pcl::PointXYZ>::Ptr tree (new pcl::search::KdTree<pcl::PointXYZ>);
-//tree->setInputCloud (pclPoints);
-
-//begin = clock();
-////#pragma omp parallel for shared(pclPoints, tree)
-//for(int i=0; i<pclPoints->size(); i++){
-//    pcl::PointXYZ& point = pclPoints->at(i);
-//    std::vector<int> treeIndices (1);
-//    std::vector<float> treeDists (1);
-//    //tree->nearestKSearch(point, 1, treeIndices, treeDists);
-//    tree->radiusSearch(point, 0.5, treeIndices, treeDists);
-//}
-//end = clock();
-//search_time = ((double)(end - begin) / CLOCKS_PER_SEC);
-//std::cout << "Searching for all radius neighbors (r = 0.5m) took " << search_time << " seconds." << std::endl;
-////  endTime = boost::posix_time::microsec_clock::local_time();
-////  cout << "CPU Time: " << timeDifference(startTime, endTime) << endl;

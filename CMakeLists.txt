@@ -44,6 +44,7 @@ file(GLOB octree_ocl_SRC
   "src/Octree.hpp"
   "src/OctreeOCL.hpp"
   "src/OctreeOCL.cl"
+  "src/HVOctree.cl"
 )
 add_library(octree_ocl SHARED ${octree_ocl_SRC})
 target_link_libraries(

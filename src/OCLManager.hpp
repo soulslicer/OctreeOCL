@@ -7,6 +7,7 @@
 #include <numeric>
 #include <string>
 #include <map>
+#include <boost/algorithm/string.hpp>
 
 #ifdef __APPLE__
 #include <OpenCl/cl.hpp>
@@ -29,12 +30,29 @@ public:
         this->point = "PointT";
         std::cout << "Parsing OpenCL kernel for " << type << std::endl;
     }
-    inline void setFile(std::string& filename, std::string& _struct)
+    inline void setFile(std::string& filename, std::string& path, std::string& _struct)
     {
-        std::ifstream programFile((char*) filename.c_str());
-        std::string programString(std::istreambuf_iterator<char>(programFile),
-                                  (std::istreambuf_iterator<char>()));
-        program = _struct + ReplaceString(programString);
+        // Support multiple files?
+        std::vector<std::string> files;
+        boost::split(files,filename,boost::is_any_of(" "));
+        if(files.size() == 1){
+            std::ifstream programFile((char*) (path+filename).c_str());
+            std::string programString(std::istreambuf_iterator<char>(programFile),
+                                      (std::istreambuf_iterator<char>()));
+            if(!programString.size()) cerr << filename << " is empty" << endl;
+            program = _struct + ReplaceString(programString);
+        }
+        else{
+            program = "";
+            program += _struct;
+            for(std::string& file : files){
+                std::ifstream programFile((char*) (path+file).c_str());
+                std::string programString(std::istreambuf_iterator<char>(programFile),
+                                          (std::istreambuf_iterator<char>()));
+                if(!programString.size()) cerr << file << " is empty" << endl;
+                program += ReplaceString(programString);
+            }
+        }
     }
 
     inline std::string ReplaceString(std::string subject) {
@@ -59,7 +77,7 @@ private:
 class OCLBuilder
 {
 public:
-    virtual void configureFile(std::string&) = 0;
+    virtual void configureFile(std::string&, std::string&) = 0;
     Parser *getResult()
     {
         return _result;
@@ -77,9 +95,9 @@ public:
         _struct = "typedef struct {\n union {\n float data[4];\n struct {\n float x; \n float y; \n float z; \n float w; \n }; \n }; \n } PointXYZ; \n\n";
         _result = new Parser(type);
     }
-    inline void configureFile(std::string& filename)
+    inline void configureFile(std::string& filename, std::string& path)
     {
-        _result->setFile(filename, _struct);
+        _result->setFile(filename, path, _struct);
     }
 private:
     std::string type;
@@ -95,9 +113,9 @@ public:
         _struct = "typedef struct {\n union {\n float data[4];\n float rgba[4];\n struct {\n float x;\n float y;\n float z;\n float w;\n};\n struct {\n float r;\n float g;\n float b;\n float a;\n};\n};\n} PointXYZRGBA;\n\n";
         _result = new Parser(type);
     }
-    inline void configureFile(std::string& filename)
+    inline void configureFile(std::string& filename, std::string& path)
     {
-        _result->setFile(filename, _struct);
+        _result->setFile(filename, path, _struct);
     }
 private:
     std::string type;
@@ -113,9 +131,9 @@ public:
         _struct = "typedef struct {\nunion {\nfloat data[4];\nstruct {\n    float x;\n    float y;\n    float z;\n    float w;\n};\n};\nunion {\nfloat normals[4];\nstruct {\n    float normal_x;\n    float normal_y;\n    float normal_z;\n    float normal_w;\n};\n};\nunion {\nfloat rgba;\nstruct {\n    uchar b;\n    uchar g;\n    uchar r;\n    uchar a;\n};\n};\nfloat curvature;\nfloat free[2];\n} PointXYZRGBNormal;\n\n";
         _result = new Parser(type);
     }
-    inline void configureFile(std::string& filename)
+    inline void configureFile(std::string& filename, std::string& path)
     {
-        _result->setFile(filename, _struct);
+        _result->setFile(filename, path, _struct);
     }
 private:
     std::string type;
@@ -129,14 +147,14 @@ public:
     {
         _OCLBuilder = b;
     }
-    inline  void construct(std::string& filename);
+    inline  void construct(std::string& filename, std::string& path);
 private:
     OCLBuilder *_OCLBuilder;
 };
 
-inline void Reader::construct(std::string& filename)
+inline void Reader::construct(std::string& filename, std::string& path)
 {
-    _OCLBuilder->configureFile(filename);
+    _OCLBuilder->configureFile(filename, path);
 }
 
 class OCLManager {
@@ -341,7 +359,6 @@ cl::Program OCLManager::buildProgramFromSource(std::string filename) {
 }
 
 cl::Program OCLManager::buildProgramFromSource(std::string filename, OCLManager::Cloud cloudType) {
-    filename = clPath + filename;
     printf("%s\n",filename.c_str());
 
     std::string src;
@@ -351,7 +368,7 @@ cl::Program OCLManager::buildProgramFromSource(std::string filename, OCLManager:
         {
             XYZRGBNormalOCLBuilder XYZRGBNormalOCLBuilder;
             reader.setOCLBuilder(&XYZRGBNormalOCLBuilder);
-            reader.construct(filename);
+            reader.construct(filename, clPath);
             src.append(XYZRGBNormalOCLBuilder.getResult()->getProgram());
         }
         break;
@@ -360,7 +377,7 @@ cl::Program OCLManager::buildProgramFromSource(std::string filename, OCLManager:
         {
             XYZRGBAOCLBuilder XYZRGBAOCLBuilder;
             reader.setOCLBuilder(&XYZRGBAOCLBuilder);
-            reader.construct(filename);
+            reader.construct(filename, clPath);
             src.append(XYZRGBAOCLBuilder.getResult()->getProgram());
         }
         break;
@@ -369,7 +386,7 @@ cl::Program OCLManager::buildProgramFromSource(std::string filename, OCLManager:
         {
             XYZOCLBuilder XYZOCLBuilder;
             reader.setOCLBuilder(&XYZOCLBuilder);
-            reader.construct(filename);
+            reader.construct(filename, clPath);
             src.append(XYZOCLBuilder.getResult()->getProgram());
         }
         break;
@@ -382,12 +399,15 @@ cl::Program OCLManager::buildProgramFromSource(std::string filename, OCLManager:
     try{
         cl::Program::Sources source(1, std::make_pair(src.c_str(),
                                                       src.length()+1));
-        cl::Program prog(context, source);
-        prog.build(devices);
-        program = prog;
+        program = cl::Program(context, source);
+        program.build(devices);
+        //program = prog;
     }
     catch(cl::Error e) {
         cout << e.what() << ": Error code " << e.err() << endl;
+        cerr << program.getBuildInfo<CL_PROGRAM_BUILD_STATUS>(getDevice()) << endl;
+        cerr << program.getBuildInfo<CL_PROGRAM_BUILD_OPTIONS>(getDevice()) << endl;
+        cerr << program.getBuildInfo<CL_PROGRAM_BUILD_LOG>(getDevice()) << endl;
         exit(-1);
     }
     return program;

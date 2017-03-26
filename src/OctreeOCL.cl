@@ -136,10 +136,8 @@ bool overlaps(const PointT* query, float radius, float sqRadius, const OctantLin
     return (norm < sqRadius);
 }
 
-__kernel void nearestNeighbourKernel(__global PointT* data, __global OctantLinear* octantLinearVector, int octantLinearVectorSize, __global int* successors, __global PointT* queries, __global int* indices)
-{
-    // Get point
-    PointT query = queries[get_global_id(0)];
+int nearestNeighbourSearch(__global PointT* data, __global OctantLinear* octantLinearVector, int octantLinearVectorSize, __global int* successors, __private PointT* queryP){
+    PointT query = *queryP;
 
     // Initial Variables
     float minDistance = -1;
@@ -256,6 +254,20 @@ __kernel void nearestNeighbourKernel(__global PointT* data, __global OctantLinea
         pop_back(&stackVector);
     }
 
-    indices[get_global_id(0)] = resultIndex;
     if(DEBUG) printf("ANS %d\n", resultIndex);
+    return resultIndex;
+
+    return 0;
+}
+
+__kernel void nearestNeighbourKernel(__global PointT* data, __global OctantLinear* octantLinearVector, int octantLinearVectorSize, __global int* successors, __global PointT* queries, __global int* indices)
+{
+    // Get point
+    PointT query = queries[get_global_id(0)];
+
+    // Search
+    int resultIndex = nearestNeighbourSearch(data, octantLinearVector, octantLinearVectorSize, successors, &query);
+
+    // Set back
+    indices[get_global_id(0)] = resultIndex;
 }
