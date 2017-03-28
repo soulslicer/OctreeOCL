@@ -30,10 +30,12 @@ endif()
 
 find_package(PCL REQUIRED)
 find_package(OpenCL REQUIRED)
+find_package(OpenCV 3 REQUIRED)
 
 include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/src
   ${PCL_INCLUDE_DIRS}
+  ${OPENCL_INCLUDE_DIR}
   ${OPENCL_INCLUDE_DIR}
 )
 link_directories(${PCL_LIBRARY_DIRS})
@@ -45,12 +47,14 @@ file(GLOB octree_ocl_SRC
   "src/OctreeOCL.hpp"
   "src/OctreeOCL.cl"
   "src/HVOctree.cl"
+  "src/HVOctree.hpp"
 )
 add_library(octree_ocl SHARED ${octree_ocl_SRC})
 target_link_libraries(
   octree_ocl
   ${PCL_LIBRARIES}
   ${OPENCL_LIBRARIES}
+  ${OpenCV_LIBRARIES}
 )
 set_target_properties(octree_ocl PROPERTIES LINKER_LANGUAGE CXX)
 
@@ -60,4 +64,14 @@ target_link_libraries(
   octree_ocl
   ${PCL_LIBRARIES}
   ${OPENCL_LIBRARIES}
+  ${OpenCV_LIBRARIES}
+)
+
+add_executable(example_hvoctree "src/example_hvoctree.cpp")
+target_link_libraries(
+  example_hvoctree
+  octree_ocl
+  ${PCL_LIBRARIES}
+  ${OPENCL_LIBRARIES}
+  ${OpenCV_LIBRARIES}
 )
