@@ -126,9 +126,18 @@ public:
         return finalPath;
     }
 
+    void clear(){
+        delete this->root_;
+        if (this->params_.copyPoints) delete this->data_;
+        this->root_ = 0;
+        this->data_ = 0;
+        this->successors_.clear();
+        this->leafCount_ = 0;
+        this->octantLinearVector_.clear();
+    }
+
     void linearizeTree(){
         recursiveSearch(this->root_);
-        cout << "Count: " << octantLinearVector_.size() << endl;
     }
 
     int recursiveSearch(Octant* octant){
@@ -144,6 +153,7 @@ public:
 
     void uploadTreeToGPU(){
         const std::vector<PointT>& points = *this->data_;
+        cout << "Tree Count: " << octantLinearVector_.size() << " Cloud Count: " << points.size() << endl;
         octantLinearVectorBuffer_ = cl::Buffer(ocl_->getContext(), CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, sizeof(OctantLinear) * octantLinearVector_.size(), &octantLinearVector_[0]);
         successorsBuffer_ = cl::Buffer(ocl_->getContext(), CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, sizeof(uint32_t) * this->successors_.size(), &this->successors_[0]);
         cloudBuffer_ = cl::Buffer(ocl_->getContext(), CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, sizeof(PointT) * points.size(), (void*)&points[0]);
