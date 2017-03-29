@@ -32,11 +32,24 @@ find_package(PCL REQUIRED)
 find_package(OpenCL REQUIRED)
 find_package(OpenCV 3 REQUIRED)
 
+find_package(catkin REQUIRED COMPONENTS
+  pcl_conversions
+  pcl_ros
+  roscpp
+  sensor_msgs
+  dynamic_reconfigure
+  cv_bridge
+  message_generation
+  image_transport
+  image_geometry
+)
+
 include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/src
   ${PCL_INCLUDE_DIRS}
   ${OPENCL_INCLUDE_DIR}
   ${OPENCL_INCLUDE_DIR}
+  ${catkin_INCLUDE_DIRS}
 )
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
@@ -67,11 +80,12 @@ target_link_libraries(
   ${OpenCV_LIBRARIES}
 )
 
-add_executable(example_hvoctree "src/example_hvoctree.cpp")
+add_executable(example_hvoctree "src/example_hvoctree.cpp" "src/DataCombiner.hpp")
 target_link_libraries(
   example_hvoctree
   octree_ocl
   ${PCL_LIBRARIES}
   ${OPENCL_LIBRARIES}
   ${OpenCV_LIBRARIES}
+  ${catkin_LIBRARIES}
 )
