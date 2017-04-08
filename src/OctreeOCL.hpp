@@ -177,7 +177,7 @@ public:
         int iter = 0;
         while(indexStack.size()){
             iter++;
-            //if(iter++ > 30) break;
+            //if(iter++ > 500) {cerr << "Too many iterations" << endl; throw;}
 
             // Get Stack Items
             int currIndex = indexStack.back().index;
