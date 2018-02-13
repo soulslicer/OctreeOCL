@@ -1,3 +1,7 @@
+OpenCL version of:
+
+https://github.com/jbehley/octree
+
 ## Deps:
 
 libproj-dev
