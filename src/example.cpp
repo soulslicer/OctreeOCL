@@ -95,7 +95,7 @@ typedef pcl::PointXYZ PointT;
 int main(int argc, char** argv)
 {    
     float mult;
-    bool test_type = true;
+    bool test_type = false;
     if(test_type)
         mult = 0.5;
     else
