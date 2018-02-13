@@ -80,7 +80,7 @@ void printPoint(PointT* p)
 
 void printPointNormal(PointT* p)
 {
-    printf("%f %f %f %f %f %f\n",p->x,p->y,p->z,p->normal_x,p->normal_y,p->normal_z);
+    //printf("%f %f %f %f %f %f\n",p->x,p->y,p->z,p->normal_x,p->normal_y,p->normal_z);
 }
 
 float compute(const PointT* a, const PointT* b){

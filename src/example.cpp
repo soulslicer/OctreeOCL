@@ -32,23 +32,31 @@
 #include <string>
 #include <boost/lexical_cast.hpp>
 #include <boost/tokenizer.hpp>
+#include <chrono>
+using namespace std;
 
 template <typename PointT, typename ContainerT>
 void readPoints(const std::string& filename, ContainerT& points)
 {
   std::ifstream in(filename.c_str());
+  if(!in.is_open()){
+      throw std::runtime_error("No such file");
+  }
   std::string line;
   boost::char_separator<char> sep(" ");
   // read point cloud from "freiburg format"
   while (!in.eof())
   {
     std::getline(in, line);
+    cout << line << endl;
     in.peek();
 
     boost::tokenizer<boost::char_separator<char> > tokenizer(line, sep);
     std::vector<std::string> tokens(tokenizer.begin(), tokenizer.end());
 
-    if (tokens.size() != 6) continue;
+    cout << tokens.size() << endl;
+
+    if (tokens.size() != 3) continue;
     float x = boost::lexical_cast<float>(tokens[3]);
     float y = boost::lexical_cast<float>(tokens[4]);
     float z = boost::lexical_cast<float>(tokens[5]);
@@ -93,30 +101,24 @@ int main(int argc, char** argv)
         return -1;
     }
     std::string filename = argv[1];
+    cout << filename << endl;
 
     // Load points
     std::vector<PointT> points;
-    readPoints<PointT>(filename, points);
-    std::cout << "Read " << points.size() << " points." << std::endl;
-    if (points.size() == 0)
-    {
-        std::cerr << "Empty point cloud." << std::endl;
-        return -1;
-    }
+    pcl::PointCloud<PointT> pointCloud;
+    pcl::io::loadPCDFile(filename, pointCloud);
+    for(int i=0; i<pointCloud.size(); i++) points.push_back(pointCloud[i]);
 
     // Increase Points
-//    std::vector<PointT> pointsTemp;
-//    for(int i=0; i<points.size(); i++){
-//        pointsTemp.push_back(points[i]);
-//        pointsTemp.push_back(pcl::PointXYZ(points[i].x+0.01, points[i].y-0.01, points[i].z+0.01));
-//        pointsTemp.push_back(pcl::PointXYZ(points[i].x+0.02, points[i].y-0.02, points[i].z+0.02));
-//        pointsTemp.push_back(pcl::PointXYZ(points[i].x+0.03, points[i].y-0.03, points[i].z+0.03));
-//        pointsTemp.push_back(pcl::PointXYZ(points[i].x+0.04, points[i].y-0.04, points[i].z+0.04));
-//        pointsTemp.push_back(pcl::PointXYZ(points[i].x+0.05, points[i].y-0.05, points[i].z+0.05));
-//        pointsTemp.push_back(pcl::PointXYZ(points[i].x+0.06, points[i].y-0.06, points[i].z+0.06));
-//    }
-//    points = pointsTemp;
-//    std::random_shuffle(points.begin(), points.end());
+    std::vector<PointT> pointsTemp;
+    for(int i=0; i<points.size(); i++){
+        for(float j=0; j<2.5; j+=0.01){
+            pointsTemp.push_back(pcl::PointXYZ(points[i].x+j, points[i].y-j, points[i].z+j));
+        }
+    }
+    points = pointsTemp;
+    std::random_shuffle(points.begin(), points.end());
+    cout << "Total Size: " << points.size() << endl;
 
     // Load PCL version of points
     pcl::PointCloud<pcl::PointXYZ>::Ptr pclPoints (new pcl::PointCloud<pcl::PointXYZ>);
@@ -124,24 +126,28 @@ int main(int argc, char** argv)
         pclPoints->push_back(pcl::PointXYZ(points[i].x, points[i].y, points[i].z));
     }
 
-    int64_t begin, end;
+    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+    std::chrono::steady_clock::time_point end= std::chrono::steady_clock::now();
 
     // Initializing the Octree with points from point cloud.
     OctreeGPU<PointT> octree;
     unibn::OctreeParams params;
 
     // Initialize
-    begin = clock();
+    begin = std::chrono::steady_clock::now();
     octree.initialize(points);
-    cout << "Init Time: " << ((double)(clock() - begin) / CLOCKS_PER_SEC) << endl;
+    end = std::chrono::steady_clock::now();
+    std::cout << "Init Time = " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() <<std::endl;
 
-    begin = clock();
+    begin = std::chrono::steady_clock::now();
     octree.linearizeTree();
-    cout << "Lin Time: " << ((double)(clock() - begin) / CLOCKS_PER_SEC) << endl;
+    end = std::chrono::steady_clock::now();
+    std::cout << "Lin Time = " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() <<std::endl;
 
-    begin = clock();
+    begin = std::chrono::steady_clock::now();
     octree.uploadTreeToGPU();
-    cout << "GPU Upload: " << ((double)(clock() - begin) / CLOCKS_PER_SEC) << endl;
+    end = std::chrono::steady_clock::now();
+    std::cout << "GPU Upload Time = " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() <<std::endl;
 
     pcl::search::KdTree<pcl::PointXYZ>::Ptr tree (new pcl::search::KdTree<pcl::PointXYZ>);
     tree->setInputCloud (pclPoints);
@@ -163,7 +169,7 @@ int main(int argc, char** argv)
     if(test_type){
 
         // PCL Test
-        begin = clock();
+        begin = std::chrono::steady_clock::now();
         std::vector<std::vector<int>> pclResults(queries.size());
         for(int i=0; i<queries.size(); i++){
             std::vector<int> treeIndices;
@@ -171,10 +177,11 @@ int main(int argc, char** argv)
             tree->radiusSearch(queries[i], 0.5, treeIndices, treeDists);
             pclResults[i] = treeIndices;
         }
-        cout << "PCL Speed: " << ((double)(clock() - begin) / CLOCKS_PER_SEC) << endl;
+        end = std::chrono::steady_clock::now();
+        std::cout << "PCL Speed = " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() <<std::endl;
 
         // Default Test
-        begin = clock();
+        begin = std::chrono::steady_clock::now();
         std::vector<std::vector<int>> defaultResults(queries.size());
         for(int i=0; i<queries.size(); i++){
             std::vector<uint32_t> resultsDefault;
@@ -183,16 +190,18 @@ int main(int argc, char** argv)
             for(uint32_t m : resultsDefault) resultsDefaultConv.push_back((int)m);
             defaultResults[i] = resultsDefaultConv;
         }
-        cout << "Default Speed: " << ((double)(clock() - begin) / CLOCKS_PER_SEC) << endl;
+        end = std::chrono::steady_clock::now();
+        std::cout << "Default Speed = " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() <<std::endl;
 
         // Non Recursive Test
-        begin = clock();
+        begin = std::chrono::steady_clock::now();
         std::vector<std::vector<int>> nonRecursiveResults(queries.size());
         for(int i=0; i<queries.size(); i++){
             std::vector<int> resultsNonRecursive = octree.radiusNeighboursExt(queries[i], 0.5);
             nonRecursiveResults[i] = resultsNonRecursive;
         }
-        cout << "NR Speed: " << ((double)(clock() - begin) / CLOCKS_PER_SEC) << endl;
+        end = std::chrono::steady_clock::now();
+        std::cout << "NR Speed = " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() <<std::endl;
 
         if(!twoVectorVectorsEqual(pclResults, defaultResults)) cout << "FUCK" << endl;
 
@@ -202,7 +211,7 @@ int main(int argc, char** argv)
     else
     {
         // PCL Test
-        begin = clock();
+        begin = std::chrono::steady_clock::now();
         std::vector<int> indicesPCL(queries.size());
         for(int i=0; i<queries.size(); i++){
             std::vector<int> treeIndices (1);
@@ -210,20 +219,23 @@ int main(int argc, char** argv)
             tree->nearestKSearch(queries[i], 1, treeIndices, treeDists);
             indicesPCL[i] = treeIndices[0];
         }
-        cout << "PCL Speed: " << ((double)(clock() - begin) / CLOCKS_PER_SEC) << endl;
+        end = std::chrono::steady_clock::now();
+        std::cout << "PCL Speed = " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() <<std::endl;
 
         // GPU Test
-        begin = clock();
+        begin = std::chrono::steady_clock::now();
         std::vector<int> indicesGPU = octree.findNeighboursGPU(queries);
-        cout << "GPU Speed: " << ((double)(clock() - begin) / CLOCKS_PER_SEC) << endl;
+        end = std::chrono::steady_clock::now();
+        std::cout << "GPU Speed = " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() <<std::endl;
 
         // CPU Test
-        begin = clock();
+        begin = std::chrono::steady_clock::now();
         std::vector<int> indicesCPU(queries.size());
         for(int i=0; i<queries.size(); i++){
             indicesCPU[i] = octree.findNeighbor(queries[i]);
         }
-        cout << "CPU Speed: " << ((double)(clock() - begin) / CLOCKS_PER_SEC) << endl;
+        end = std::chrono::steady_clock::now();
+        std::cout << "CPU Speed = " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() <<std::endl;
 
         // Confirm
         for(int i=0; i<queries.size(); i++){

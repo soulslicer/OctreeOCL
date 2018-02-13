@@ -30,26 +30,13 @@ endif()
 
 find_package(PCL REQUIRED)
 find_package(OpenCL REQUIRED)
-find_package(OpenCV 3 REQUIRED)
-
-find_package(catkin REQUIRED COMPONENTS
-  pcl_conversions
-  pcl_ros
-  roscpp
-  sensor_msgs
-  dynamic_reconfigure
-  cv_bridge
-  message_generation
-  image_transport
-  image_geometry
-)
+find_package(OpenCV REQUIRED)
 
 include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/src
   ${PCL_INCLUDE_DIRS}
   ${OPENCL_INCLUDE_DIR}
   ${OPENCL_INCLUDE_DIR}
-  ${catkin_INCLUDE_DIRS}
 )
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
@@ -62,30 +49,21 @@ file(GLOB octree_ocl_SRC
   "src/HVOctree.cl"
   "src/HVOctree.hpp"
 )
-add_library(octree_ocl SHARED ${octree_ocl_SRC})
-target_link_libraries(
-  octree_ocl
-  ${PCL_LIBRARIES}
-  ${OPENCL_LIBRARIES}
-  ${OpenCV_LIBRARIES}
-)
-set_target_properties(octree_ocl PROPERTIES LINKER_LANGUAGE CXX)
+#add_library(octree_ocl SHARED ${octree_ocl_SRC})
+#target_link_libraries(
+#  octree_ocl
+#  ${PCL_LIBRARIES}
+#  ${OPENCL_LIBRARIES}
+#  ${OpenCV_LIBRARIES}
+#)
+#set_target_properties(octree_ocl PROPERTIES LINKER_LANGUAGE CXX)
 
-add_executable(example "src/example.cpp")
+list(REMOVE_ITEM PCL_LIBRARIES "vtkproj4")
+
+add_executable(example "src/example.cpp" ${octree_ocl_SRC})
 target_link_libraries(
   example
-  octree_ocl
   ${PCL_LIBRARIES}
   ${OPENCL_LIBRARIES}
   ${OpenCV_LIBRARIES}
-)
-
-add_executable(example_hvoctree "src/example_hvoctree.cpp" "src/DataCombiner.hpp")
-target_link_libraries(
-  example_hvoctree
-  octree_ocl
-  ${PCL_LIBRARIES}
-  ${OPENCL_LIBRARIES}
-  ${OpenCV_LIBRARIES}
-  ${catkin_LIBRARIES}
 )
