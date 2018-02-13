@@ -94,6 +94,13 @@ typedef pcl::PointXYZ PointT;
 
 int main(int argc, char** argv)
 {    
+    float mult;
+    bool test_type = true;
+    if(test_type)
+        mult = 0.5;
+    else
+        mult = 2.5;
+
     // Read filename
     if (argc < 2)
     {
@@ -112,7 +119,7 @@ int main(int argc, char** argv)
     // Increase Points
     std::vector<PointT> pointsTemp;
     for(int i=0; i<points.size(); i++){
-        for(float j=0; j<2.5; j+=0.01){
+        for(float j=0; j<mult; j+=0.01){
             pointsTemp.push_back(pcl::PointXYZ(points[i].x+j, points[i].y-j, points[i].z+j));
         }
     }
@@ -163,8 +170,6 @@ int main(int argc, char** argv)
     }
     std::random_shuffle(queries.begin(), queries.end());
     cout << queries.size() << endl;
-
-    bool test_type = false;
 
     if(test_type){
 
@@ -231,6 +236,7 @@ int main(int argc, char** argv)
         // CPU Test
         begin = std::chrono::steady_clock::now();
         std::vector<int> indicesCPU(queries.size());
+        #pragma omp parallel for shared(octree)
         for(int i=0; i<queries.size(); i++){
             indicesCPU[i] = octree.findNeighbor(queries[i]);
         }

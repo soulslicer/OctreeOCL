@@ -30,12 +30,10 @@ endif()
 
 find_package(PCL REQUIRED)
 find_package(OpenCL REQUIRED)
-find_package(OpenCV REQUIRED)
 
 include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/src
   ${PCL_INCLUDE_DIRS}
-  ${OPENCL_INCLUDE_DIR}
   ${OPENCL_INCLUDE_DIR}
 )
 link_directories(${PCL_LIBRARY_DIRS})
@@ -65,5 +63,4 @@ target_link_libraries(
   example
   ${PCL_LIBRARIES}
   ${OPENCL_LIBRARIES}
-  ${OpenCV_LIBRARIES}
 )
